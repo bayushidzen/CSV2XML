@@ -97,6 +97,16 @@ namespace CSV2XML
                 }
                 return "bad date";
             }
+
+            static string TimeSearch(string line)
+            {
+                Match match = Regex.Match(line, @"\d+[:]\d+[:]\d+");
+                if (match.Success)
+                {
+                    return match.Captures[0].Value;
+                }
+                return "bad time";
+            }
         }
     }
 }
