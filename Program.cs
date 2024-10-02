@@ -13,8 +13,16 @@
             {
                 Console.WriteLine(dir);
                 string[] source = File.ReadAllLines(dir);
+                string[] editedSource = DeleteFirstLine(source);
                 string filename = Path.GetFileName(dir) + ".xml";
                 File.Copy(dir, logpathdone + Path.GetFileName(dir), true);
+            }
+
+            static string[] DeleteFirstLine(string[] source)
+            {
+                string[] newSource = new string[source.Length - 1];
+                Array.Copy(source, 1, newSource, 0, source.Length - 1);
+                return newSource;
             }
         }
     }
