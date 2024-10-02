@@ -158,6 +158,36 @@ namespace CSV2XML
 
                 return action;
             }
+            static string UserAgentSearch(string line)
+            {
+                string useragent = "";
+
+                string sampleUserAgentText1 = "sample user agent text 1";
+                string sampleUserAgentText2 = "sample user agent text 2";
+                string sampleUserAgentText3 = "sample user agent text 3";
+
+                int indexOfSampleUserAgentText1 = line.IndexOf(sampleUserAgentText1);
+                int indexOfSampleUserAgentText2 = line.IndexOf(sampleUserAgentText2);
+                int indexOfSampleUserAgentText3 = line.IndexOf(sampleUserAgentText3);
+
+                if (indexOfSampleUserAgentText1 != -1)
+                {
+                    useragent = line.Substring(indexOfSampleUserAgentText1, line.Length - indexOfSampleUserAgentText1);
+                }
+                else if (indexOfSampleUserAgentText2 != -1)
+                {
+                    useragent = line.Substring(indexOfSampleUserAgentText2, line.Length - indexOfSampleUserAgentText2);
+                }
+                else if (indexOfSampleUserAgentText3 != -1)
+                {
+                    useragent = line.Substring(indexOfSampleUserAgentText3, line.Length - indexOfSampleUserAgentText3);
+                }
+                else
+                {
+                    useragent = "unknown_useragent";
+                }
+                return useragent;
+            }
         }
     }
 }
