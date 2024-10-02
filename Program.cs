@@ -60,6 +60,31 @@ namespace CSV2XML
                 }
                 return schoolLogin;
             }
+            static string LogTypeSearch(string line)
+            {
+                Match mainLog = Regex.Match(line, @"[[][I][N][F][O][]]");
+                Match errorLog = Regex.Match(line, @"[[][E][R][R][O][R][]]");
+                Match warningLog = Regex.Match(line, @"[[][W][A][R][N][I][N][G][]]");
+                Match criticalLog = Regex.Match(line, @"[[][C][R][I][T][I][C][A][L][]]");
+
+                if (mainLog.Success)
+                {
+                    return mainLog.Captures[0].Value;
+                }
+                else if (errorLog.Success)
+                {
+                    return errorLog.Captures[0].Value;
+                }
+                else if (warningLog.Success)
+                {
+                    return warningLog.Captures[0].Value;
+                }
+                else if (criticalLog.Success)
+                {
+                    return criticalLog.Captures[0].Value;
+                }
+                return "[unknown_log_type]";
+            }
         }
     }
 }
