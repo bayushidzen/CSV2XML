@@ -26,6 +26,7 @@ namespace CSV2XML
                 Array.Copy(source, 1, newSource, 0, source.Length - 1);
                 return newSource;
             }
+
             static string SchoolLoginSearch(string line)
             {
                 string schoolLogin = "";
@@ -60,6 +61,7 @@ namespace CSV2XML
                 }
                 return schoolLogin;
             }
+
             static string LogTypeSearch(string line)
             {
                 Match mainLog = Regex.Match(line, @"[[][I][N][F][O][]]");
@@ -84,6 +86,16 @@ namespace CSV2XML
                     return criticalLog.Captures[0].Value;
                 }
                 return "[unknown_log_type]";
+            }
+
+            static string DateSearch(string line)
+            {
+                Match match = Regex.Match(line, @"\d+[-]\d+[-]\d+");
+                if (match.Success)
+                {
+                    return match.Captures[0].Value;
+                }
+                return "bad date";
             }
         }
     }
