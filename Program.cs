@@ -107,6 +107,16 @@ namespace CSV2XML
                 }
                 return "bad time";
             }
+
+            static string IPAdressSearch(string line)
+            {
+                Match match = Regex.Match(line, @"\d+[.]\d+[.]\d+[.]\d+");
+                if (match.Success)
+                {
+                    return match.Captures[0].Value;
+                }
+                return "bad IP";
+            }
         }
     }
 }
