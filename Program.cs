@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace CSV2XML
 {
@@ -10,14 +11,32 @@ namespace CSV2XML
             string logpathxml = @"\output_to_bd\";
             string logpathdone = @"\done\done_";
 
-            string[] dirs = Directory.GetFiles(logpath, "*.csv");
-            foreach (string dir in dirs)
+            string[] logs = Directory.GetFiles(logpath, "*.csv");
+            foreach (string log in logs)
             {
-                Console.WriteLine(dir);
-                string[] source = File.ReadAllLines(dir);
+                Console.WriteLine(log);
+                string[] source = File.ReadAllLines(log);
                 string[] editedSource = DeleteFirstLine(source);
-                string filename = Path.GetFileName(dir) + ".xml";
-                File.Copy(dir, logpathdone + Path.GetFileName(dir), true);
+                string filename = Path.GetFileName(log) + ".xml";
+                CreateXML(editedSource, logpathxml, filename);
+                File.Copy(log, logpathdone + Path.GetFileName(log), true);
+                File.Delete(log);
+            }
+            static void CreateXML(string[] source, string logpathxml, string filename)
+            {
+                XDocument cust = new XDocument(new XElement("Root"));
+                foreach (string line in source)
+                {
+                    cust.Root.Add(new XElement("User",
+                        new XElement("login", SchoolLoginSearch(line)),
+                        new XElement("Type", LogTypeSearch(line)),
+                        new XElement("Date", DateSearch(line)),
+                        new XElement("Time", TimeSearch(line)),
+                        new XElement("IP_Address", IPAdressSearch(line)),
+                        new XElement("Action", ActionSearch(line)),
+                        new XElement("UserAgent", UserAgentSearch(line))));
+                }
+                cust.Save(logpathxml + filename);
             }
 
             static string[] DeleteFirstLine(string[] source)
@@ -158,6 +177,7 @@ namespace CSV2XML
 
                 return action;
             }
+
             static string UserAgentSearch(string line)
             {
                 string useragent = "";
