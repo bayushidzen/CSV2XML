@@ -117,6 +117,47 @@ namespace CSV2XML
                 }
                 return "bad IP";
             }
+
+            static string ActionSearch(string line)
+            {
+                string action = "";
+                string noAction = "noAction";
+
+                string sampleActionText1 = "sample action text 1";
+                string sampleActionText2 = "sample action text 2";
+                string sampleActionText3 = "sample action text 3";
+
+                string sampleNoActionText1 = "sample action text 1";
+                string sampleNoActionText2 = "sample action text 2";
+                string sampleNoActionText3 = "sample action text 3";
+
+                int indexOfSampleActionText1 = line.IndexOf(sampleActionText1);
+                int indexOfSampleActionText2 = line.IndexOf(sampleActionText2);
+                int indexOfSampleActionText3 = line.IndexOf(sampleActionText3);
+
+                int indexOfSampleNoActionText1 = line.IndexOf(sampleNoActionText1);
+                int indexOfSampleNoActionText2 = line.IndexOf(sampleNoActionText2);
+                int indexOfSampleNoActionText3 = line.IndexOf(sampleNoActionText3);
+
+                if (indexOfSampleActionText1 != -1)
+                {
+                    action = line.Substring(indexOfSampleActionText1, line.Length - indexOfSampleActionText1);
+                }
+                else if (indexOfSampleActionText2 != -1)
+                {
+                    action = line.Substring(indexOfSampleActionText2, line.Length - indexOfSampleActionText2);
+                }
+                else if (indexOfSampleActionText3 != -1)
+                {
+                    action = line.Substring(indexOfSampleActionText3, line.Length - indexOfSampleActionText3);
+                }
+                else if ((indexOfSampleNoActionText1 != -1) || (indexOfSampleNoActionText2 != -1) || (indexOfSampleNoActionText3 != -1))
+                {
+                    action = noAction;
+                }
+
+                return action;
+            }
         }
     }
 }
